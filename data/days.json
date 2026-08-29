@@ -1,0 +1,28 @@
+{
+  "days": [
+    {
+      "id": "01",
+      "folder": "01_day",
+      "title": "Dia 01",
+      "description": "Primeiros passos no universo dos containers: o que são, por que existem e como se relacionam com o Kubernetes.",
+      "topics": [
+        {
+          "title": "O que é um container?",
+          "file": "o_que_eh_um_container.md"
+        },
+        {
+          "title": "Container Engine & Runtime",
+          "file": "container_engine_e_runtime.md"
+        },
+        {
+          "title": "O que é o Kubernetes?",
+          "file": "o_que_eh_kubernetes.md"
+        },
+        {
+          "title": "Arquitetura do Kubernetes",
+          "file": "arquitetura_kubernetes.md"
+        }
+      ]
+    }
+  ]
+}
