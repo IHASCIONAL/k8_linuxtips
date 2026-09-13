@@ -1,0 +1,295 @@
+{
+  "01": {
+    "title": "Dia 01",
+    "questions": [
+      {
+        "q": "O que de fato isola um container do restante do sistema operacional?",
+        "options": [
+          "Um hypervisor dedicado por container",
+          "Namespaces e cgroups do Kernel Linux",
+          "Uma cópia própria do Kernel dentro do container",
+          "O Container Engine, sozinho, sem ajuda do Kernel"
+        ],
+        "correct": 1,
+        "explain": "Container é isolamento de processo via Kernel: namespaces (isolam o que o processo enxerga) + cgroups (limitam quanto ele pode consumir)."
+      },
+      {
+        "q": "Qual a diferença entre Container Engine e Container Runtime?",
+        "options": [
+          "São sinônimos, dois nomes pro mesmo componente",
+          "Engine roda em produção, Runtime só em desenvolvimento",
+          "Engine é a ferramenta do dia a dia (docker run); Runtime é quem garante a execução e, na maioria das vezes, faz a ponte com o Kernel",
+          "Runtime cria a imagem; Engine só executa o container já pronto"
+        ],
+        "correct": 2,
+        "explain": "O Engine (Docker, Podman, CRI-O) é usado no dia a dia. Na maioria das vezes ele não fala direto com o Kernel — quem faz isso é o Container Runtime."
+      },
+      {
+        "q": "Qual runtime é a implementação de referência da OCI Runtime Spec, e por isso é considerado o low-level runtime padrão?",
+        "options": ["containerd", "RunC", "gVisor", "Kata Containers"],
+        "correct": 1,
+        "explain": "RunC é a implementação de referência da OCI Runtime Spec e fala diretamente com o Kernel — por isso é o low-level runtime padrão."
+      },
+      {
+        "q": "O que a OCI (Open Container Initiative) padroniza?",
+        "options": [
+          "Apenas o formato de imagem",
+          "Apenas como o Kubernetes agenda Pods",
+          "Como uma imagem é empacotada, como um container é executado, e como enviar/baixar imagens de um registry",
+          "As portas de rede usadas pelo Kubernetes"
+        ],
+        "correct": 2,
+        "explain": "A OCI mantém 3 specs: Runtime Spec (execução), Image Spec (formato da imagem) e Distribution Spec (push/pull em registries)."
+      },
+      {
+        "q": "Dentro do Control Plane, qual componente é o único que conversa diretamente com o ETCD?",
+        "options": ["Kube Scheduler", "Kube Controller Manager", "Kubelet", "Kube API Server"],
+        "correct": 3,
+        "explain": "Só o API Server fala com o ETCD. Scheduler, Controller Manager e os Workers falam com o API Server — nunca direto com o ETCD."
+      },
+      {
+        "q": "Qual é a função do Kube Scheduler?",
+        "options": [
+          "Guardar o estado do cluster",
+          "Decidir em qual Node um novo Pod (ou volume) deve ser posicionado, com base na capacidade disponível",
+          "Recriar Pods que morreram",
+          "Expor um Service pra fora do cluster"
+        ],
+        "correct": 1,
+        "explain": "O Scheduler decide o posicionamento de novos Pods e volumes nos Nodes disponíveis, considerando a capacidade de cada um."
+      },
+      {
+        "q": "Em qual porta o Kube API Server escuta por padrão?",
+        "options": ["2379", "10250", "6443", "30000"],
+        "correct": 2,
+        "explain": "6443 (TCP) é a porta de entrada principal do cluster, usada pelo Kube API Server."
+      },
+      {
+        "q": "Um Service do tipo NodePort reserva sua porta (30000–32767) em quais Nodes?",
+        "options": [
+          "Só no Node onde o Pod alvo está rodando",
+          "Só nos Nodes do Control Plane",
+          "Em todos os Workers do cluster, mesmo nos que não têm o Pod rodando",
+          "Em nenhum Node — a porta fica só no Load Balancer externo"
+        ],
+        "correct": 2,
+        "explain": "NodePort reserva a mesma porta em TODOS os Workers. O tráfego pode chegar em qualquer um deles; o kube-proxy roteia até o Pod certo."
+      },
+      {
+        "q": "Um Pod com mais de um container: o que esses containers compartilham entre si?",
+        "options": [
+          "Nada — cada container do Pod tem seu próprio IP",
+          "O mesmo IP (rede) e volumes montados no Pod",
+          "Apenas o mesmo Node, sem compartilhar rede",
+          "O mesmo processo do Kernel"
+        ],
+        "correct": 1,
+        "explain": "Containers do mesmo Pod compartilham o IP do Pod (se enxergam por localhost) e os volumes montados nele."
+      },
+      {
+        "q": "O que o ReplicaSet controla?",
+        "options": [
+          "Se um Node vive ou morre",
+          "Se o número de réplicas de Pods definido está sempre no ar, recriando Pods que morrerem",
+          "Em qual Node o Scheduler deve rodar",
+          "As portas expostas pelo Service"
+        ],
+        "correct": 1,
+        "explain": "O ReplicaSet garante a contagem de réplicas de Pods — não decide nada sobre Nodes. Se um Pod morre, ele sobe outro."
+      },
+      {
+        "q": "Ao atualizar a imagem de um Deployment (ex: trocar a versão do nginx), o que acontece por trás dos panos?",
+        "options": [
+          "Os Pods existentes são editados in-place, sem criar nada novo",
+          "O Deployment cria um novo ReplicaSet com a versão nova e reduz o antigo a 0 réplicas (mantendo-o pra rollback)",
+          "O ReplicaSet antigo é apagado imediatamente",
+          "Nada muda até o próximo reinício manual do cluster"
+        ],
+        "correct": 1,
+        "explain": "Deployment não edita Pods existentes: cria um novo ReplicaSet, sobe os Pods novos e desce os antigos aos poucos (rolling update)."
+      },
+      {
+        "q": "Por que um Service é necessário, já que cada Pod já tem seu próprio IP?",
+        "options": [
+          "Porque Pods não têm IP próprio",
+          "Porque o IP do Pod muda toda vez que ele é recriado — o Service dá um endereço estável pro conjunto de Pods",
+          "Porque só o Service pode acessar o ETCD",
+          "Porque containers não conseguem se comunicar sem um Service"
+        ],
+        "correct": 1,
+        "explain": "Pods são efêmeros e ganham IP novo a cada recriação. O Service resolve isso com um IP/DNS estável, roteando pro conjunto de Pods certo via selector de labels."
+      },
+      {
+        "q": "Ao rodar `file kubectl` num binário recém-baixado, o que essa saída indica sobre o arquivo?",
+        "options": [
+          "Que ele já tem permissão de execução liberada",
+          "Que é o formato/conteúdo do arquivo (ex: ELF 64-bit executable) — não tem relação com a permissão de rodá-lo",
+          "Que o arquivo está corrompido",
+          "Que ele precisa ser recompilado antes de usar"
+        ],
+        "correct": 1,
+        "explain": "`file` inspeciona o conteúdo binário (ELF, arquitetura, se é estaticamente linkado, etc.). Isso é sobre o formato do arquivo — a permissão de execução é uma camada totalmente separada, controlada pelos bits do arquivo."
+      },
+      {
+        "q": "Um binário recém-baixado aparece como `-rw-r--r--` e dá \"Permission denied\" ao rodar `./kubectl`. Por quê?",
+        "options": [
+          "Porque o download corrompeu o arquivo",
+          "Porque nenhuma das três classes de permissão tem o bit de execução (x) ativado",
+          "Porque o arquivo não é um ELF válido",
+          "Porque falta instalar uma dependência"
+        ],
+        "correct": 1,
+        "explain": "Ferramentas de download não ativam o bit de execução por padrão, por segurança. Sem o `x`, o Kernel recusa a execução mesmo sendo um ELF executável válido — daí o `chmod +x`."
+      },
+      {
+        "q": "Depois de `chmod +x kubectl`, a permissão vira `-rwxr-xr-x`. O que o `+x` (sem especificar u/g/o) fez?",
+        "options": [
+          "Adicionou o bit de execução só pro dono do arquivo",
+          "Removeu os bits de leitura e adicionou só o de execução",
+          "Somou o bit de execução nas três classes (dono, grupo, outros), mantendo os bits de leitura que já existiam",
+          "Tornou o arquivo executável apenas via sudo"
+        ],
+        "correct": 2,
+        "explain": "`chmod +x` sem especificar classe soma o `x` em dono, grupo e outros de uma vez, sem mexer nos bits de leitura/escrita que já estavam lá."
+      },
+      {
+        "q": "Por que mover o `kubectl` pra `/usr/local/bin` (e não deixar na pasta onde foi baixado)?",
+        "options": [
+          "Porque só lá o binário ganha permissão de execução",
+          "Porque `/usr/local/bin` já está no $PATH — o binário fica disponível de qualquer diretório sem precisar do caminho completo",
+          "Porque é o único diretório com espaço em disco suficiente",
+          "Porque isso configura automaticamente o acesso ao cluster"
+        ],
+        "correct": 1,
+        "explain": "$PATH é a lista de diretórios que o shell varre ao rodar um comando sem caminho. Colocando o binário num diretório do PATH, dá pra chamar `kubectl` de qualquer lugar — daí também o motivo de precisar de `sudo` pra escrever lá, já que é um diretório do root."
+      },
+      {
+        "q": "O que o kind (Kubernetes IN Docker) usa como \"Node\" do cluster?",
+        "options": [
+          "Uma VM completa por Node",
+          "Um container Docker rodando os componentes do Kubernetes por dentro",
+          "Um processo isolado via chroot, sem containers",
+          "Uma instância de nuvem provisionada automaticamente"
+        ],
+        "correct": 1,
+        "explain": "kind materializa cada Node (Control Plane ou Worker) como um container Docker — por isso não precisa de VM nem de cloud provider pra rodar um cluster localmente."
+      },
+      {
+        "q": "Por que o kind precisa do Docker instalado?",
+        "options": [
+          "Porque o kubectl só funciona dentro de containers",
+          "Porque os Nodes do cluster kind são, na prática, containers Docker",
+          "Porque o Docker é quem compila os binários do Kubernetes",
+          "Não precisa — o Docker é só uma opção alternativa"
+        ],
+        "correct": 1,
+        "explain": "Sem Docker (ou Podman) rodando, o kind não tem como subir os containers que fazem o papel de Nodes do cluster."
+      },
+      {
+        "q": "Rodando só `kind create cluster`, sem nenhum arquivo de configuração, quantos Nodes o cluster tem e com qual papel?",
+        "options": [
+          "3 Nodes: 1 control-plane e 2 workers",
+          "Nenhum Node — só sobe o Control Plane fora de um Node",
+          "Um único Node, fazendo o papel de Control Plane e Worker ao mesmo tempo",
+          "Depende da quantidade de CPUs da máquina host"
+        ],
+        "correct": 2,
+        "explain": "Por padrão, sem `--config`, o kind cria um cluster de um único Node que acumula os dois papéis. Pra ter Control Plane e Workers separados, é preciso passar um arquivo YAML via `--config`."
+      },
+      {
+        "q": "No arquivo de configuração do kind (`kind-cluster.yaml`), o que cada item da lista `nodes` representa?",
+        "options": [
+          "Um Pod que será criado automaticamente no cluster",
+          "Um container Docker separado, com o papel (role) definido: control-plane ou worker",
+          "Uma linha de log do cluster",
+          "Um usuário com acesso ao kubectl"
+        ],
+        "correct": 1,
+        "explain": "Cada entrada em `nodes` vira um container Docker próprio. Uma lista com 1 `control-plane` e 2 `worker` faz o kind subir 3 containers, reproduzindo a topologia real do Kubernetes."
+      },
+      {
+        "q": "Sem passar `--name`, qual nome o kind dá ao cluster criado?",
+        "options": ["default", "kind", "local-cluster", "cluster-01"],
+        "correct": 1,
+        "explain": "O nome padrão é `kind`. Por isso `kind delete cluster` sem `--name` apaga esse cluster padrão — pra ter vários clusters ao mesmo tempo, cada um precisa de um `--name` diferente."
+      },
+      {
+        "q": "O que é o namespace `kube-system`?",
+        "options": [
+          "Onde ficam os Pods das aplicações dos usuários por padrão",
+          "Onde rodam os Pods que implementam o próprio Kubernetes (API Server, ETCD, Scheduler, kube-proxy, DNS interno...)",
+          "Um namespace exclusivo pra armazenar Secrets",
+          "O namespace usado só durante a instalação do cluster, depois é removido"
+        ],
+        "correct": 1,
+        "explain": "kube-system é onde vivem os Pods que fazem o próprio Kubernetes funcionar. Aplicações de usuário, sem indicar namespace, vão pro `default`."
+      },
+      {
+        "q": "Num cluster kind com 1 Control Plane + 2 Workers, por que existem 3 Pods `kube-proxy-*` no kube-system?",
+        "options": [
+          "Porque o kube-proxy precisa de redundância tripla por padrão, independente do número de Nodes",
+          "Porque kube-proxy roda como DaemonSet, com 1 Pod por Node do cluster",
+          "Porque cada Pod de aplicação recebe seu próprio kube-proxy",
+          "É um valor fixo, sempre 3, independente da topologia"
+        ],
+        "correct": 1,
+        "explain": "kube-proxy roda em todo Node do cluster (1 por Node) — com 3 Nodes na topologia (1 control-plane + 2 workers), aparecem 3 Pods."
+      },
+      {
+        "q": "Qual é o papel do `coredns` dentro do kube-system?",
+        "options": [
+          "Fazer o scheduling dos Pods",
+          "Ser o servidor de DNS interno do cluster, resolvendo nomes de Service pro IP correspondente",
+          "Guardar o estado do cluster no lugar do ETCD",
+          "Rotear tráfego externo via NodePort"
+        ],
+        "correct": 1,
+        "explain": "CoreDNS é o DNS interno do cluster — resolve nomes como `servico.namespace.svc.cluster.local` pro IP do Service correspondente."
+      },
+      {
+        "q": "O que a flag `-A` faz num comando como `kubectl get pods -A`?",
+        "options": [
+          "Mostra só os Pods do namespace `default`",
+          "Mostra os Pods de todos os namespaces de uma vez",
+          "Mostra só Pods com problema (não Running)",
+          "Apaga todos os Pods listados"
+        ],
+        "correct": 1,
+        "explain": "`-A` (ou `--all-namespaces`) agrega recursos de todos os namespaces na mesma listagem, em vez de restringir a um só com `-n`."
+      },
+      {
+        "q": "Ao rodar `kubectl run giropops --image nginx --port 80`, o que é criado — e o que falta em comparação ao fluxo normal via Deployment?",
+        "options": [
+          "Um Deployment com 1 réplica, igual ao fluxo normal",
+          "Um Pod solto, sem ReplicaSet por trás — se ele morrer, ninguém recria",
+          "Um ReplicaSet sem Pods ainda",
+          "Um Service já exposto automaticamente"
+        ],
+        "correct": 1,
+        "explain": "`kubectl run` cria um Pod isolado, sem Deployment nem ReplicaSet gerenciando-o — diferente do fluxo Deployment → ReplicaSet → Pod. Se esse Pod cair, nada o recria."
+      },
+      {
+        "q": "No comando `kubectl exec -ti giropops -- bash`, pra que servem as flags `-t` e `-i`?",
+        "options": [
+          "Definem o namespace e o timeout da conexão",
+          "`-t` aloca um terminal (tty) e `-i` mantém o stdin aberto, permitindo uma sessão interativa",
+          "Ambas controlam o nível de log exibido",
+          "`-t` apaga o Pod depois do comando e `-i` ignora erros"
+        ],
+        "correct": 1,
+        "explain": "`-t` (tty) + `-i` (stdin aberto) são o combo padrão pra abrir uma sessão interativa dentro de um container, como um shell."
+      },
+      {
+        "q": "Ao rodar `kubectl expose pods giropops --type NodePort` e ver `PORT(S): 80:32471/TCP`, o que cada número representa?",
+        "options": [
+          "80 é a porta do Node e 32471 é a porta do Pod",
+          "80 é a porta do Service (uso interno) e 32471 é a porta aberta em todo Worker, dentro da faixa de NodePort",
+          "Ambos são portas aleatórias sem relação com o cluster",
+          "80 é o número de réplicas e 32471 é o timeout em segundos"
+        ],
+        "correct": 1,
+        "explain": "O formato é `<porta do Service>:<NodePort>/<protocolo>`. O NodePort (32471) cai dentro da faixa 30000–32767 reservada em todo Worker, documentada em Arquitetura do Kubernetes."
+      }
+    ]
+  }
+}

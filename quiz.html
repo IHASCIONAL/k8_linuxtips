@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>K8s Notes — LinuxTips</title>
+  <title>Quiz — K8s Notes</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/style.css" />
@@ -11,25 +11,22 @@
 <body>
   <header class="site-header">
     <div class="brand"><span class="dot">#</span> k8s<span style="color:#ff6a1a">.</span>notes</div>
-    <div class="header-right">
-      <div class="brand-sub">trilha kubernetes — linuxtips</div>
-      <a class="back-link" href="quiz.html">quiz &rarr;</a>
-    </div>
+    <a class="back-link" href="index.html">&larr; todos os dias</a>
   </header>
 
-  <section class="hero">
-    <div class="prompt">root@linuxtips:~$ kubectl get days --all-namespaces</div>
-    <h1>Minhas anotações de Kubernetes</h1>
-    <p>Central de estudos do treinamento de Kubernetes da LinuxTips. Cada dia reúne o que foi estudado, com exemplos didáticos e anotações próprias.</p>
+  <section class="hero" style="padding-bottom: 8px;">
+    <div class="prompt">root@linuxtips:~$ kubectl exec quiz -- validar --conhecimento</div>
+    <h1 style="font-size:30px;">Quiz de validação</h1>
+    <p>Perguntas essenciais pra checar o que ficou das anotações de cada dia. Escolha um dia (ou todos) pra começar.</p>
   </section>
 
-  <main class="day-grid" id="day-grid">
-    <!-- preenchido via assets/app.js -->
+  <main class="quiz-wrap" id="quiz-wrap">
+    <!-- preenchido via assets/quiz.js -->
   </main>
 
   <footer>feito com <span style="color:#ff6a1a">&hearts;</span> durante a trilha de kubernetes</footer>
 
-  <script src="assets/app.js"></script>
-  <script>initIndex();</script>
+  <script src="assets/quiz.js"></script>
+  <script>initQuiz();</script>
 </body>
 </html>

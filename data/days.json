@@ -21,6 +21,30 @@
         {
           "title": "Arquitetura do Kubernetes",
           "file": "arquitetura_kubernetes.md"
+        },
+        {
+          "title": "O que é um Pod?",
+          "file": "o_que_eh_um_pod.md"
+        },
+        {
+          "title": "O que é um Service?",
+          "file": "o_que_eh_um_service.md"
+        },
+        {
+          "title": "Instalando o kubectl",
+          "file": "instalando_kubectl.md"
+        },
+        {
+          "title": "O que é o kind?",
+          "file": "o_que_eh_o_kind.md"
+        },
+        {
+          "title": "Namespaces",
+          "file": "namespaces.md"
+        },
+        {
+          "title": "kubectl na prática: criando e expondo um Pod",
+          "file": "kubectl_na_pratica.md"
         }
       ]
     }

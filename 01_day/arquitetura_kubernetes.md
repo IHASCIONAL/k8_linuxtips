@@ -60,3 +60,22 @@ flowchart TD
 | **Kube-proxy** | Faz a comunicação dos Pods com o resto do mundo — o que for necessário pra expor um serviço ou fazer um container se conectar a outro. | Pods, rede do node |
 
 > 🔗 **Conexão:** é o **Kubelet** quem aciona o **Container Runtime** (containerd, runc... ver **Container Engine & Runtime**) pra de fato criar e manter os containers rodando no node.
+
+## 🔌 Portas de cada serviço
+
+> Cada componente do cluster escuta em portas específicas — importante saber pra liberar firewall entre Control Plane e Workers, ou pra debugar um problema de conectividade.
+
+| Onde | Componente | Porta | Protocolo | Para quê |
+|---|---|---|---|---|
+| Control Plane | Kube API Server | 6443 | TCP | Porta de entrada principal do cluster — todo o resto fala com o API Server por aqui |
+| Control Plane | ETCD | 2379 | TCP | Comunicação com clientes (o próprio API Server) |
+| Control Plane | ETCD | 2380 | TCP | Comunicação entre peers do ETCD (replicação do estado) |
+| Control Plane | Kube Scheduler | 10259 | TCP | Endpoint seguro (métricas/healthz) |
+| Control Plane | Kube Controller Manager | 10257 | TCP | Endpoint seguro (métricas/healthz) |
+| Workers | Kubelet | 10250 | TCP | API do Kubelet — usada pelo Control Plane pra exec, logs e métricas do node |
+| Workers | NodePort (Services) | 30000–32767 | TCP | Faixa reservada em **todo** Worker pra expor um Service do tipo `NodePort`, mesmo em nodes onde o Pod alvo não está rodando |
+| Rede (CNI) | Weave Net | 6783–6784 | TCP/UDP | Comunicação entre nodes pra rotear o tráfego dos Pods — depende do plugin de CNI escolhido |
+
+> ⚠️ **Nota:** as portas 10251 (Scheduler) e 10252 (Controller Manager) aparecem em materiais mais antigos — eram os endpoints **inseguros** (HTTP, sem autenticação), hoje desabilitados por padrão. As portas atuais e seguras são **10259** e **10257** (HTTPS).
+
+> 👉 **Continua em O que é um Pod?**: como as aplicações rodam de fato dentro dos Workers — a menor unidade de execução do cluster e quem garante que ela continue no ar.
