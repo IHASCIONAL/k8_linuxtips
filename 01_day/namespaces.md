@@ -77,4 +77,4 @@ Mostram, respectivamente, os Deployments, Services e ReplicaSets de **todos** os
 
 > 🔗 **Conexão:** quem decidiu que existiriam exatamente 3 Pods de kube-proxy e 3 de kindnet foi a topologia definida no `kind-cluster.yaml` (ver **O que é o kind?**) — 3 Nodes geram 3 Pods de cada um desses componentes, que rodam em todo Node do cluster.
 
-> 👉 **Continua em kubectl na prática: criando e expondo um Pod**: como sair da teoria e criar/expor um Pod de verdade, sem escrever nenhum YAML.
+> 👉 **Continua no Dia 02**: como os Pods funcionam de fato — o que são, quem garante que continuam no ar, como expô-los com um Service, e como criar/inspecionar um de verdade com `kubectl`.

@@ -4,7 +4,7 @@
       "id": "01",
       "folder": "01_day",
       "title": "Dia 01",
-      "description": "Primeiros passos no universo dos containers: o que são, por que existem e como se relacionam com o Kubernetes.",
+      "description": "Primeiros passos no universo dos containers: o que são, por que existem e como se relacionam com o Kubernetes. Instalação do kubectl e criação de um cluster local com kind.",
       "topics": [
         {
           "title": "O que é um container?",
@@ -23,14 +23,6 @@
           "file": "arquitetura_kubernetes.md"
         },
         {
-          "title": "O que é um Pod?",
-          "file": "o_que_eh_um_pod.md"
-        },
-        {
-          "title": "O que é um Service?",
-          "file": "o_que_eh_um_service.md"
-        },
-        {
           "title": "Instalando o kubectl",
           "file": "instalando_kubectl.md"
         },
@@ -41,10 +33,38 @@
         {
           "title": "Namespaces",
           "file": "namespaces.md"
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "folder": "02_day",
+      "title": "Dia 02",
+      "description": "Pods na prática: o que são, como o ReplicaSet e o Deployment garantem sua execução, como expô-los com um Service, e como criar, inspecionar e explorar um Pod de verdade com kubectl, limitando CPU e memória com requests e limits e conhecendo volumes com emptyDir.",
+      "topics": [
+        {
+          "title": "O que é um Pod?",
+          "file": "o_que_eh_um_pod.md"
+        },
+        {
+          "title": "O que é um Service?",
+          "file": "o_que_eh_um_service.md"
         },
         {
           "title": "kubectl na prática: criando e expondo um Pod",
           "file": "kubectl_na_pratica.md"
+        },
+        {
+          "title": "Explorando Pods em execução",
+          "file": "explorando_pods_em_execucao.md"
+        },
+        {
+          "title": "Limitando CPU e memória",
+          "file": "limitando_cpu_e_memoria.md"
+        },
+        {
+          "title": "Volumes e emptyDir",
+          "file": "volumes_e_emptydir.md"
         }
       ]
     }

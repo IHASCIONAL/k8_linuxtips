@@ -65,61 +65,6 @@
         "explain": "6443 (TCP) é a porta de entrada principal do cluster, usada pelo Kube API Server."
       },
       {
-        "q": "Um Service do tipo NodePort reserva sua porta (30000–32767) em quais Nodes?",
-        "options": [
-          "Só no Node onde o Pod alvo está rodando",
-          "Só nos Nodes do Control Plane",
-          "Em todos os Workers do cluster, mesmo nos que não têm o Pod rodando",
-          "Em nenhum Node — a porta fica só no Load Balancer externo"
-        ],
-        "correct": 2,
-        "explain": "NodePort reserva a mesma porta em TODOS os Workers. O tráfego pode chegar em qualquer um deles; o kube-proxy roteia até o Pod certo."
-      },
-      {
-        "q": "Um Pod com mais de um container: o que esses containers compartilham entre si?",
-        "options": [
-          "Nada — cada container do Pod tem seu próprio IP",
-          "O mesmo IP (rede) e volumes montados no Pod",
-          "Apenas o mesmo Node, sem compartilhar rede",
-          "O mesmo processo do Kernel"
-        ],
-        "correct": 1,
-        "explain": "Containers do mesmo Pod compartilham o IP do Pod (se enxergam por localhost) e os volumes montados nele."
-      },
-      {
-        "q": "O que o ReplicaSet controla?",
-        "options": [
-          "Se um Node vive ou morre",
-          "Se o número de réplicas de Pods definido está sempre no ar, recriando Pods que morrerem",
-          "Em qual Node o Scheduler deve rodar",
-          "As portas expostas pelo Service"
-        ],
-        "correct": 1,
-        "explain": "O ReplicaSet garante a contagem de réplicas de Pods — não decide nada sobre Nodes. Se um Pod morre, ele sobe outro."
-      },
-      {
-        "q": "Ao atualizar a imagem de um Deployment (ex: trocar a versão do nginx), o que acontece por trás dos panos?",
-        "options": [
-          "Os Pods existentes são editados in-place, sem criar nada novo",
-          "O Deployment cria um novo ReplicaSet com a versão nova e reduz o antigo a 0 réplicas (mantendo-o pra rollback)",
-          "O ReplicaSet antigo é apagado imediatamente",
-          "Nada muda até o próximo reinício manual do cluster"
-        ],
-        "correct": 1,
-        "explain": "Deployment não edita Pods existentes: cria um novo ReplicaSet, sobe os Pods novos e desce os antigos aos poucos (rolling update)."
-      },
-      {
-        "q": "Por que um Service é necessário, já que cada Pod já tem seu próprio IP?",
-        "options": [
-          "Porque Pods não têm IP próprio",
-          "Porque o IP do Pod muda toda vez que ele é recriado — o Service dá um endereço estável pro conjunto de Pods",
-          "Porque só o Service pode acessar o ETCD",
-          "Porque containers não conseguem se comunicar sem um Service"
-        ],
-        "correct": 1,
-        "explain": "Pods são efêmeros e ganham IP novo a cada recriação. O Service resolve isso com um IP/DNS estável, roteando pro conjunto de Pods certo via selector de labels."
-      },
-      {
         "q": "Ao rodar `file kubectl` num binário recém-baixado, o que essa saída indica sobre o arquivo?",
         "options": [
           "Que ele já tem permissão de execução liberada",
@@ -256,6 +201,66 @@
         ],
         "correct": 1,
         "explain": "`-A` (ou `--all-namespaces`) agrega recursos de todos os namespaces na mesma listagem, em vez de restringir a um só com `-n`."
+      }
+    ]
+  },
+  "02": {
+    "title": "Dia 02",
+    "questions": [
+      {
+        "q": "Um Pod com mais de um container: o que esses containers compartilham entre si?",
+        "options": [
+          "Nada — cada container do Pod tem seu próprio IP",
+          "O mesmo IP (rede) e volumes montados no Pod",
+          "Apenas o mesmo Node, sem compartilhar rede",
+          "O mesmo processo do Kernel"
+        ],
+        "correct": 1,
+        "explain": "Containers do mesmo Pod compartilham o IP do Pod (se enxergam por localhost) e os volumes montados nele."
+      },
+      {
+        "q": "O que o ReplicaSet controla?",
+        "options": [
+          "Se um Node vive ou morre",
+          "Se o número de réplicas de Pods definido está sempre no ar, recriando Pods que morrerem",
+          "Em qual Node o Scheduler deve rodar",
+          "As portas expostas pelo Service"
+        ],
+        "correct": 1,
+        "explain": "O ReplicaSet garante a contagem de réplicas de Pods — não decide nada sobre Nodes. Se um Pod morre, ele sobe outro."
+      },
+      {
+        "q": "Ao atualizar a imagem de um Deployment (ex: trocar a versão do nginx), o que acontece por trás dos panos?",
+        "options": [
+          "Os Pods existentes são editados in-place, sem criar nada novo",
+          "O Deployment cria um novo ReplicaSet com a versão nova e reduz o antigo a 0 réplicas (mantendo-o pra rollback)",
+          "O ReplicaSet antigo é apagado imediatamente",
+          "Nada muda até o próximo reinício manual do cluster"
+        ],
+        "correct": 1,
+        "explain": "Deployment não edita Pods existentes: cria um novo ReplicaSet, sobe os Pods novos e desce os antigos aos poucos (rolling update)."
+      },
+      {
+        "q": "Por que um Service é necessário, já que cada Pod já tem seu próprio IP?",
+        "options": [
+          "Porque Pods não têm IP próprio",
+          "Porque o IP do Pod muda toda vez que ele é recriado — o Service dá um endereço estável pro conjunto de Pods",
+          "Porque só o Service pode acessar o ETCD",
+          "Porque containers não conseguem se comunicar sem um Service"
+        ],
+        "correct": 1,
+        "explain": "Pods são efêmeros e ganham IP novo a cada recriação. O Service resolve isso com um IP/DNS estável, roteando pro conjunto de Pods certo via selector de labels."
+      },
+      {
+        "q": "Um Service do tipo NodePort reserva sua porta (30000–32767) em quais Nodes?",
+        "options": [
+          "Só no Node onde o Pod alvo está rodando",
+          "Só nos Nodes do Control Plane",
+          "Em todos os Workers do cluster, mesmo nos que não têm o Pod rodando",
+          "Em nenhum Node — a porta fica só no Load Balancer externo"
+        ],
+        "correct": 2,
+        "explain": "NodePort reserva a mesma porta em TODOS os Workers. O tráfego pode chegar em qualquer um deles; o kube-proxy roteia até o Pod certo."
       },
       {
         "q": "Ao rodar `kubectl run giropops --image nginx --port 80`, o que é criado — e o que falta em comparação ao fluxo normal via Deployment?",
@@ -267,6 +272,28 @@
         ],
         "correct": 1,
         "explain": "`kubectl run` cria um Pod isolado, sem Deployment nem ReplicaSet gerenciando-o — diferente do fluxo Deployment → ReplicaSet → Pod. Se esse Pod cair, nada o recria."
+      },
+      {
+        "q": "Combinando `--dry-run=client` com `-o yaml` num `kubectl run`, o que se obtém?",
+        "options": [
+          "O manifesto YAML equivalente ao Pod que seria criado, sem criá-lo de fato",
+          "A lista de todos os Pods do cluster em formato YAML",
+          "Um erro, já que as duas flags são incompatíveis",
+          "O Pod é criado normalmente, só a saída muda de formato"
+        ],
+        "correct": 0,
+        "explain": "`--dry-run=client` valida e simula sem criar nada; `-o yaml` formata essa simulação como o manifesto YAML equivalente — útil pra gerar um ponto de partida em vez de escrever o YAML do zero."
+      },
+      {
+        "q": "Por que `kubectl apply -f pod.yaml` pode falhar com `pod updates may not add or remove containers`?",
+        "options": [
+          "Porque o arquivo YAML está com sintaxe inválida",
+          "Porque `apply` atualiza um Pod já existente a partir do arquivo, mas não pode alterar a lista de containers dele — é preciso `delete` e recriar",
+          "Porque falta permissão de root pra rodar o comando",
+          "Porque `apply` só funciona na primeira criação, nunca em updates"
+        ],
+        "correct": 1,
+        "explain": "Um Pod já criado tem sua lista de containers imutável. Pra mudar isso, o caminho é `kubectl delete -f pod.yaml` seguido de `kubectl apply -f pod.yaml`."
       },
       {
         "q": "No comando `kubectl exec -ti giropops -- bash`, pra que servem as flags `-t` e `-i`?",
@@ -289,6 +316,122 @@
         ],
         "correct": 1,
         "explain": "O formato é `<porta do Service>:<NodePort>/<protocolo>`. O NodePort (32471) cai dentro da faixa 30000–32767 reservada em todo Worker, documentada em Arquitetura do Kubernetes."
+      },
+      {
+        "q": "Qual comando mostra a saída (stdout/stderr) de um container em execução, sem precisar entrar nele?",
+        "options": ["kubectl logs", "kubectl attach", "kubectl describe", "kubectl top"],
+        "correct": 0,
+        "explain": "`kubectl logs <pod>` mostra a saída do processo principal do container — útil pra debugar sem depender de `exec` ou `attach`."
+      },
+      {
+        "q": "Por que um curl direto pro IP de um Pod (ex: `curl 10.244.3.2`) só funciona rodando de dentro do cluster?",
+        "options": [
+          "Porque esse IP pertence à rede interna do cluster (Pod CIDR), sem rota alcançável de fora",
+          "Porque Pods bloqueiam requisições HTTP por padrão",
+          "Porque é necessário configurar uma VPN antes",
+          "Porque o IP do Pod é só um hostname simbólico, não um IP de verdade"
+        ],
+        "correct": 0,
+        "explain": "O IP de um Pod vive na rede interna do cluster (Pod CIDR) — só é alcançável de dentro dele, por outro Pod. De fora, não existe rota até lá."
+      },
+      {
+        "q": "Qual a diferença entre `kubectl attach` e `kubectl exec`?",
+        "options": [
+          "São sinônimos, dois nomes pro mesmo comando",
+          "`attach` conecta ao processo principal (PID 1) já em execução, e só funciona se esse processo tiver alocado um TTY; `exec` sempre abre um processo novo",
+          "`attach` cria um novo Pod; `exec` só funciona em Pods multi-container",
+          "`exec` é só pra leitura de logs; `attach` é quem permite interação"
+        ],
+        "correct": 1,
+        "explain": "`exec` executa um novo processo dentro do container (funciona sempre que o binário existe na imagem). `attach` conecta ao processo principal já rodando — falha se ele não tiver alocado TTY, como costuma acontecer num Pod de nginx."
+      },
+      {
+        "q": "Num Pod com `cpu: \"0.3\"` em `requests` e `cpu: \"0.5\"` em `limits`, como o container se comporta?",
+        "options": [
+          "Só pode usar 0.3 de CPU; o valor de `limits` é ignorado",
+          "Sempre usa exatamente 0.5 de CPU, independente da carga",
+          "Pode usar tranquilamente 0.3, pode pegar um pouco a mais se precisar, mas nunca passa de 0.5",
+          "Pode passar de 0.5 se houver CPU sobrando no Node"
+        ],
+        "correct": 2,
+        "explain": "`requests` é o que fica garantido pro container; `limits` é a capacidade inegociável, o teto. Entre os dois valores ele pode consumir um pouco mais, mas nunca ultrapassa o `limits`."
+      },
+      {
+        "q": "O que acontece com um container que ultrapassa o `limits` de memória, e o que acontece com um que ultrapassa o `limits` de CPU?",
+        "options": [
+          "Memória: é encerrado por OOM (`OOMKilled`) e reiniciado; CPU: sofre throttling e continua rodando, mais lento",
+          "Os dois são encerrados imediatamente e o Pod é apagado",
+          "Memória: sofre throttling; CPU: é encerrado por OOM",
+          "Nada acontece com nenhum dos dois, `limits` é só informativo"
+        ],
+        "correct": 0,
+        "explain": "Memória não é \"freável\": ao passar do limite o Kernel mata o processo por OOM, e com `restartPolicy: Always` o container é reiniciado. CPU sofre throttling: o container fica mais lento, mas não morre."
+      },
+      {
+        "q": "Qual a diferença entre `Mi` e `MB` ao definir memória num Pod?",
+        "options": [
+          "São a mesma unidade, só muda a grafia",
+          "`Mi` é menor: 1 Mi = 1.000 bytes",
+          "`MB` é o mebibyte e `Mi` é o megabyte",
+          "`Mi` (mebibyte) = 1024² = 1.048.576 bytes; `MB` (megabyte) = 1.000.000 bytes"
+        ],
+        "correct": 3,
+        "explain": "`Mi` é base 2 (1024² bytes = 1.048.576) e `MB` é base 10 (1.000.000 bytes). Por isso `memory: 128Mi` não é exatamente 128 MB."
+      },
+      {
+        "q": "Dentro de um Pod com `memory: \"256Mi\"` em `limits`, o comando `free -m` mostra qual valor de memória total?",
+        "options": [
+          "256 MiB, o limite definido no Pod",
+          "A memória total do Node onde o Pod está rodando",
+          "64 MiB, o valor de `requests`",
+          "Zero, porque o Pod não tem acesso a esse comando"
+        ],
+        "correct": 1,
+        "explain": "O `free -m` mostra a memória total do Node, não o limite do Pod. O `limits` é aplicado pelo Kubernetes por fora, e não muda o que esse comando reporta."
+      },
+      {
+        "q": "Além de garantir recurso ao container, pra que o Kube Scheduler usa os `requests` de um Pod?",
+        "options": [
+          "Pra definir o número de réplicas do Pod",
+          "Pra reiniciar o Pod quando ele ultrapassa o limite",
+          "Pra decidir em qual Node o Pod cabe, considerando a CPU e a memória livres",
+          "Pra calcular o tamanho da imagem do container"
+        ],
+        "correct": 2,
+        "explain": "O Scheduler escolhe um Node que tenha CPU e memória livres pra atender o que o Pod pediu em `requests`. Sem esse valor, ele não sabe o quanto o Pod precisa."
+      },
+      {
+        "q": "Num Pod com um volume `emptyDir`, em quais partes do YAML o volume é configurado?",
+        "options": [
+          "`volumes` dentro de cada container, e `volumeMounts` na `spec` do Pod",
+          "Só em `volumeMounts`, que já cria o volume sozinho",
+          "`volumes` em `metadata` e `volumeMounts` em `labels`",
+          "`volumeMounts` (com `mountPath` e `name`) dentro de `spec.containers`, e `volumes` na `spec`, no mesmo nível de `containers`"
+        ],
+        "correct": 3,
+        "explain": "O volume tem duas partes ligadas pelo nome: `volumes` (na `spec`, ao lado de `containers`) declara o volume e suas características; `volumeMounts` (dentro do container) diz onde e qual volume será montado."
+      },
+      {
+        "q": "O que acontece com os dados guardados num `emptyDir` quando o Pod é removido?",
+        "options": [
+          "São removidos junto com o Pod",
+          "Ficam guardados no Node pra sempre",
+          "São copiados pro Control Plane",
+          "São migrados automaticamente pro próximo Pod"
+        ],
+        "correct": 0,
+        "explain": "Tudo o que está no `emptyDir` é apagado junto com o Pod. Por isso ele não é a melhor opção de persistência: serve pra criar o Pod já com o ponto de montagem desejado."
+      },
+      {
+        "q": "Num `volumeMounts`, qual campo define o diretório onde o volume aparece dentro do container (ex: `/giropops`)?",
+        "options": [
+          "`name`",
+          "`mountPath`",
+          "`sizeLimit`",
+          "`emptyDir`"
+        ],
+        "correct": 1,
+        "explain": "`mountPath` define o diretório de montagem no container. O `name` do `volumeMounts` só indica qual volume (declarado em `volumes`) será montado ali, e `sizeLimit` é o tamanho limite do volume."
       }
     ]
   }

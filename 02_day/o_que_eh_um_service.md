@@ -46,4 +46,4 @@ flowchart LR
 
 > 🔗 **Conexão:** o Service seleciona os mesmos Pods que o ReplicaSet mantém no ar (ver **O que é um Pod?**) — os dois apontam pro mesmo conjunto de Pods, mas com responsabilidades diferentes: um garante **quantidade**, o outro garante **acesso**.
 
-> 👉 **Continua em Instalando o kubectl**: a ferramenta usada no dia a dia pra criar Pods, Deployments e Services de verdade num cluster.
+> 👉 **Continua em kubectl na prática: criando e expondo um Pod**: como sair da teoria e criar/expor um Pod de verdade, sem escrever nenhum YAML.

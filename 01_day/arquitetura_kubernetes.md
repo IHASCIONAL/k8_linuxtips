@@ -78,4 +78,4 @@ flowchart TD
 
 > ⚠️ **Nota:** as portas 10251 (Scheduler) e 10252 (Controller Manager) aparecem em materiais mais antigos — eram os endpoints **inseguros** (HTTP, sem autenticação), hoje desabilitados por padrão. As portas atuais e seguras são **10259** e **10257** (HTTPS).
 
-> 👉 **Continua em O que é um Pod?**: como as aplicações rodam de fato dentro dos Workers — a menor unidade de execução do cluster e quem garante que ela continue no ar.
+> 👉 **Continua em Instalando o kubectl**: a ferramenta usada no dia a dia pra conversar com esse Cluster e seus componentes.
